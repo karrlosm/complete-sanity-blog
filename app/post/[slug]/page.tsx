@@ -64,7 +64,13 @@ async function getData(slug: string) {
     return data;
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+type ParamsProps = {
+    params: Promise<{
+        slug: string;
+    }>;
+};
+
+export async function generateMetadata({ params }: ParamsProps): Promise<Metadata> {
     const { slug } = await params;
     const post = await getData(slug)
   
@@ -93,13 +99,10 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         images: [urlFor(post.titleImageUrl).url()],
       },
     }
-  }
-  
+};
 
 
-export default async function BlogArticle({params}: {
-    params: Promise<{ slug: string }>
-}) {
+export default async function BlogArticle({ params }: ParamsProps) {
 
     const { slug } = await params;
 
