@@ -21,8 +21,8 @@ export default function Navbar() {
                     <SearchInput />
                     <div className="flex gap-2">
                         <a
-                            href={`https://wa.me/`}
-                            title="Compartilhe no whatsapp"
+                            href={`https://instagram.com/`}
+                            title="Visite nosso Instagram"
                             target="_blank"
                             className="shrink-0 h-10 w-10 max-md:h-8 max-md:w-8 rounded-full bg-primary-custom"
                             rel="noopener noreferrer"
@@ -38,7 +38,7 @@ export default function Navbar() {
                         <a
                             href={`https://www.facebook.com/`}
                             target="_blank"
-                            title="Compartilhe no facebook"
+                            title="Visite nosso Facebook"
                             className="shrink-0 h-10 w-10 max-md:h-8 max-md:w-8 rounded-full bg-primary-custom"
                             rel="noopener noreferrer"
                         >
@@ -53,7 +53,7 @@ export default function Navbar() {
                         <a
                             href={`https://twitter.com/`}
                             target="_blank"
-                            title="Compartilhe no twitter"
+                            title="Visite nosso X"
                             className="shrink-0 h-10 w-10 max-md:h-8 max-md:w-8 rounded-full bg-primary-custom"
                             rel="noopener noreferrer"
                         >
