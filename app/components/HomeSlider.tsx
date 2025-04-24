@@ -11,13 +11,6 @@ import { formatBrazilianDate } from "@/utils/date"
 import { useEffect, useRef } from "react"
 import { useMediaQuery } from "@/hooks/useMediaQuery"
 
-const images = [
-    "https://images.unsplash.com/photo-1590004953392-5aba2e72269a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80",
-    "https://images.unsplash.com/photo-1590004845575-cc18b13d1d0a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80",
-    "https://images.unsplash.com/photo-1590004987778-bece5c9adab6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80",
-    "https://images.unsplash.com/photo-1590005176489-db2e714711fc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&h=500&w=800&q=80",
-]
-
 export default function HomeSlider({ posts }: {
     posts: SimpleBlogCardProps[];
 }) {
@@ -28,7 +21,7 @@ export default function HomeSlider({ posts }: {
     const intervalRef = useRef<NodeJS.Timeout | null>(null)
     const [sliderRef, slider] = useKeenSlider<HTMLDivElement>(
         {
-            slides: images.length,
+            slides: posts?.length,
             loop: true,
             detailsChanged(s) {
                 const newOpacities = s.track.details.slides.map((slide) => slide.portion)
@@ -85,7 +78,7 @@ export default function HomeSlider({ posts }: {
             ))}
             <div className="absolute bottom-4 flex justify-between w-full px-4 z-10 items-center">
                 <div className="flex gap-2">
-                    {images.map((_, idx) => (
+                    {posts?.map((_, idx) => (
                         <button
                             key={idx}
                             onClick={() => slider.current?.moveToIdx(idx)}

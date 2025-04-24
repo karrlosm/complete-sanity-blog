@@ -59,6 +59,33 @@ async function getMostViewedPosts() {
   return data;
 }
 
+async function getFeaturedPosts() {
+  const query = `
+    *[_type == 'blog' && featured == true] | order(publishedAt desc)[0..3] {
+      _id,
+      title,
+      smallDescription,
+      publishedAt,
+      titleImage,
+      views,
+      "currentSlug": slug.current, 
+      "author": author-> {
+        name,
+        "slug": slug.current,
+        profileImage
+      },
+      "category": category-> {
+        _id,
+        title,
+        "slug": slug.current
+      }
+    }
+  `
+
+  const data = await client.fetch(query);
+  return data;
+}
+
 import HomeSlider from "./components/HomeSlider";
 import CategoriesList from "./components/CategoriesList";
 import Link from "next/link";
@@ -68,6 +95,7 @@ import SearchInput from "./components/SearchInput";
 export default async function Home() {
   const data: SimpleBlogCardProps[] = await getData()  
   const mostViewed: SimpleBlogCardProps[] = await getMostViewedPosts()
+  const featuredPosts: SimpleBlogCardProps[] = await getFeaturedPosts()
   const categories: CategoryProps[] = await getAllCategories()
 
   return (
@@ -78,7 +106,7 @@ export default async function Home() {
         </div>
         <div className="grid w-full grid-cols-[2fr_1fr] max-lg:grid-cols-1 gap-3 max-lg:gap-5">
           <div className="bg-primary rounded-sm flex relative">
-            <HomeSlider posts={mostViewed} />
+            <HomeSlider posts={featuredPosts} />
           </div>
           <CategoriesList categories={categories} />
         </div>
@@ -129,7 +157,7 @@ export default async function Home() {
             </div>
           </div>
           <div className="flex-col flex gap-4 p-4 bg-gray-200 rounded-sm dark:bg-gray-800">
-            {mostViewed?.map((post, i) => (
+            {featuredPosts?.map((post, i) => (
               <PostListItem key={`most-viewed-hight-${post._id}`} item={post} index={i} />
             ))}
             <div className="w-full h-full max-lg:h-[160px] bg-primary flex justify-center items-center flex-col rounded-sm">

@@ -29,7 +29,7 @@ export default async function BlogGridPage({ searchParams }: SearchParamsProps) 
 
     const { page, categoria, autor, key } = await searchParams;
     const pagina = parseInt(page || '1')
-    const pageSize = 5;
+    const pageSize = 6;
 
     const author: AuthorProps = await getAuthorBySlug(autor ?? '')
     const categories: CategoryProps[] = await getAllCategories()

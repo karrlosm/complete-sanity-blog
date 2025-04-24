@@ -11,10 +11,9 @@ import { useInView } from 'react-intersection-observer'
 export default function CategoriesList({ categories }:{
     categories: CategoryProps[]
 }) {
-    const isMobile = useMediaQuery('(max-width: 1024px)')
     const { ref, inView } = useInView({
         triggerOnce: true, // A animação será acionada uma única vez
-        threshold: 0.1, // Acionar a animação quando 50% do componente estiver visível na tela
+        threshold: 0.05, // Acionar a animação quando 50% do componente estiver visível na tela
     });
 
     return (

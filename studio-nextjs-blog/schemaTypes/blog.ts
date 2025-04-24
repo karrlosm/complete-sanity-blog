@@ -64,6 +64,13 @@ export const blogType = defineType({
       type: 'number',
       initialValue: 0,
       readOnly: true, // evita que o editor altere manualmente
-    })
+    }),
+    defineField({
+      name: 'featured',
+      title: 'Destaque',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Ao marcar esse post como destaque, ele será exibido no carrossel da home e em lugares especiais',
+    }),
   ],
 })
