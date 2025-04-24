@@ -16,14 +16,16 @@ export const metadata: Metadata = {
     description: 'Leia as notícias mais atualizadas do MegaBlog aqui.',
 }
 
-export default async function BlogGridPage({ searchParams }: {
-    searchParams: {
+type SearchParamsProps = {
+    searchParams: Promise<{
         page?: string;
         categoria?: string;
         autor?: string;
         key?: string;
-    }
-}) {
+    }>;
+};
+
+export default async function BlogGridPage({ searchParams }: SearchParamsProps) {
 
     const { page, categoria, autor, key } = await searchParams;
     const pagina = parseInt(page || '1')
