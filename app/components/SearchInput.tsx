@@ -28,7 +28,7 @@ export default function SearchInput({
             params.set('key', keySearch.toString())
             router.push(`?${params.toString()}`)
             
-            if (window.location.href.includes('blog')) {
+            if (window.location.href.includes('/blog')) {
                 router.push(`?${params.toString()}`)
             } else {
                 router.push(`/blog?${params.toString()}`)
