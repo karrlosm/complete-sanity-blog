@@ -80,7 +80,6 @@ export async function generateMetadata({ params }: ParamsProps): Promise<Metadat
         description: 'Desculpe, não conseguimos encontrar esse post.',
       }
     }
-  
     return {
       title: `${post.title} | MegaBlog`,
       description: post.smallDescription,
