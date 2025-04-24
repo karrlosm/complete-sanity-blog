@@ -34,7 +34,7 @@ export function PostGridItem({item, index, showViews, grid2}: {
             params.delete('key')
             params.set('autor', item.author.slug.toString())
             
-            if (window.location.href.includes('blog')) {
+            if (window.location.href.includes('/blog')) {
                 router.push(`?${params.toString()}`)
             } else {
                 router.push(`/blog?${params.toString()}`)
@@ -50,7 +50,7 @@ export function PostGridItem({item, index, showViews, grid2}: {
             params.delete('key')
             params.set('categoria', item.category.slug.toString())
             params.set('page', '1')
-            if (window.location.href.includes('blog')) {
+            if (window.location.href.includes('/blog')) {
                 router.push(`?${params.toString()}`)
             } else {
                 router.push(`/blog?${params.toString()}`)
