@@ -87,7 +87,7 @@ export async function generateMetadata({ params }: ParamsProps): Promise<Metadat
       openGraph: {
         images: [
           {
-            url: urlFor(post.titleImageUrl).url(),
+            url: urlFor(post.titleImage).url(),
             alt: post.title,
           },
         ],
@@ -96,7 +96,7 @@ export async function generateMetadata({ params }: ParamsProps): Promise<Metadat
         card: 'summary_large_image',
         title: `${post.title} | MegaBlog`,
         description: post.smallDescription,
-        images: [urlFor(post.titleImageUrl).url()],
+        images: [urlFor(post.titleImage).url()],
       },
     }
 };
