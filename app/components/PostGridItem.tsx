@@ -8,6 +8,8 @@ import { urlFor } from '../lib/sanity';
 import { formatBrazilianDate } from '@/utils/date';
 import { useInView } from 'react-intersection-observer';
 import { Eye } from 'lucide-react';
+import { BProgress } from '@bprogress/core';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export function PostGridItem({item, index, showViews, grid2}: {
     item: SimpleBlogCardProps;
@@ -15,11 +17,47 @@ export function PostGridItem({item, index, showViews, grid2}: {
     grid2?: boolean;
     showViews?: boolean;
 }) {
+    const router = useRouter()
+    const searchParams = useSearchParams()
 
     const { ref, inView } = useInView({
         triggerOnce: true, // A animação será acionada uma única vez
         threshold: 0.1, // Acionar a animação quando 50% do componente estiver visível na tela
     });
+
+    const filterByAuthor = () => {
+        if (!searchParams.get('autor')) {
+            BProgress.start()
+            const params = new URLSearchParams(searchParams.toString())
+
+            params.delete('categoria')
+            params.delete('key')
+            params.set('autor', item.author.slug.toString())
+            
+            if (window.location.href.includes('blog')) {
+                router.push(`?${params.toString()}`)
+            } else {
+                router.push(`/blog?${params.toString()}`)
+            }
+        }
+    }
+
+    const filterByCategory = () => {
+        if (!searchParams.get('categoria')) {
+            BProgress.start()
+            const params = new URLSearchParams(searchParams.toString())
+            params.delete('autor')
+            params.delete('key')
+            params.set('categoria', item.category.slug.toString())
+            params.set('page', '1')
+            if (window.location.href.includes('blog')) {
+                router.push(`?${params.toString()}`)
+            } else {
+                router.push(`/blog?${params.toString()}`)
+            }
+        }
+    }
+
   return (
     <div className='w-full h-full'>
         <motion.div
@@ -32,11 +70,12 @@ export function PostGridItem({item, index, showViews, grid2}: {
             <div className="w-full h-full flex flex-col justify-between gap-1 items-start relative">
                 <div className='w-full'>
                     <div className="absolute z-10 m-2">
-                        <Link prefetch={false} href={''} className="bg-primary flex items-center justify-center px-2 py-1 rounded-full group hover:bg-white dark:hover:bg-white transition-all duration-300">
+                        <button onClick={() => filterByCategory()}
+                            className={`bg-primary flex items-center justify-center px-2 py-1 rounded-full  ${!searchParams.get('categoria') ? 'group hover:bg-white dark:hover:bg-white cursor-pointer' : ''} transition-all duration-300`}>
                             <span className="text-xs max-lg:text-[10px] font-medium leading-none text-white group-hover:text-primary dark:group-hover:text-primary transition-all duration-300">
                                 {item.category.title}
                             </span>
-                        </Link>
+                        </button>
                     </div>
                     <Link href={`/post/${item.currentSlug}`} className="group overflow-hidden">
                         <div className={`w-full h-[200px] ${grid2 ? 'max-lg:h-[120px]' : 'max-lg:h-[160px]'} rounded-sm overflow-hidden`}>
@@ -56,7 +95,9 @@ export function PostGridItem({item, index, showViews, grid2}: {
                     </Link>
                 </div>
                 <div className='flex gap-2 items-center w-full'>
-                    <Link prefetch={false} href={""} className="flex gap-1 items-center justify-start group">
+                    <button
+                        onClick={() => filterByAuthor()}
+                        className={`flex gap-1 items-center justify-start ${searchParams.get('autor') ? 'cursor-default' : 'group cursor-pointer'}`}>
                         <Image
                             placeholder="empty"
                             blurDataURL=""
@@ -67,7 +108,7 @@ export function PostGridItem({item, index, showViews, grid2}: {
                             className="rounded-full object-cover w-[25px] h-[25px]"
                             src={urlFor(item.author.profileImage).url()} />
                         <span className="text-xs max-lg:text-[10px] font-semibold text-gray-800 dark:text-gray-200 group-hover:underline">{item.author.name}</span>
-                    </Link>
+                    </button>
                     {showViews &&
                         <>
                             •

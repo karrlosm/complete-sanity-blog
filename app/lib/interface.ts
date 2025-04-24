@@ -23,11 +23,15 @@ export interface AuthorProps {
 }
 
 export interface FullBlog {
+    _id: string;
     title: string;
     smallDescription: string;
-    currentSlug: string;
-    titleImage: any;
-    content: any;
     publishedAt: string;
+    titleImage: any;
+    currentSlug: string;
+    author: AuthorProps;
+    category: CategoryProps;
+    views: number;
+    content: any;
 }
 

@@ -37,8 +37,9 @@ export default function CategoriesBlog({ categories }:{
     });
 
     return (
-        <div className="flex flex-row gap-2 mt-5 mb-10 flex-wrap">
+        <div className="flex flex-row gap-2 flex-wrap">
             <button
+                title={'Mostrar todas as notícias'}
                 disabled={!currentCategory}
                 className={`bg-primary flex items-center justify-center px-3 py-1.5 rounded-sm group ${!!currentCategory ? ' hover:bg-white dark:hover:bg-white cursor-pointer' : ''} transition-all duration-300 ${!currentCategory ? 'bg-primary-custom text-white cursor-default' : ''}`}
                 onClick={() =>listAll()}>
@@ -55,6 +56,7 @@ export default function CategoriesBlog({ categories }:{
                     key={category._id}
                 >
                     <button
+                        title={`Filtre por ${category.title}`}
                         disabled={(currentCategory === category.slug)}
                         className={`bg-primary flex items-center justify-center px-3 py-1.5 rounded-sm group ${!(currentCategory === category.slug) ? ' hover:bg-white dark:hover:bg-white cursor-pointer' : ''} transition-all duration-300 ${currentCategory === category.slug ? 'bg-primary-custom text-white' : ''}`}
                         onClick={() => goToCategory(category.slug)}>
